@@ -39,7 +39,7 @@ public class VarastoTest {
     }
 
     @Test
-    public void lisaysLisaaPienentaaVapaataTilaa() {
+    public void lisaysPienentaaVapaataTilaa() {
         varasto.lisaaVarastoon(8);
 
         // vapaata tilaa pitäisi vielä olla tilavuus-lisättävä määrä eli 2
@@ -56,7 +56,7 @@ public class VarastoTest {
     }
 
     @Test
-    public void ottaminenLisääTilaa() {
+    public void ottaminenLisaaTilaa() {
         varasto.lisaaVarastoon(8);
 
         varasto.otaVarastosta(2);
@@ -64,5 +64,50 @@ public class VarastoTest {
         // varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
     }
+
+    @Test
+    public void varastostaOttaminenEiMuutaSaldoaNegatiiviseksi() {
+        varasto.lisaaVarastoon(8);
+        varasto.otaVarastosta(10);
+
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void varastonSaldoEiYlitäTilavuutta() {
+        varasto.lisaaVarastoon(20);
+        assertEquals(10, varasto.getTilavuus(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void varastonSaldoOnNollaTaiPositiivinen() {
+        varasto.lisaaVarastoon(-1);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void tulostaaOikeanTiedonVarastosta() {
+        //varasto.lisaaVarastoon(1);
+        assertEquals("saldo = " + varasto.getSaldo() + ", vielä tilaa " + varasto.paljonkoMahtuu(), varasto.toString());
+    }
+
+    @Test
+    public void eiVoiLuodaVarastoaJollaNegatiivinenTilavuus() {
+        Varasto v = new Varasto(-5);
+        assertEquals(0, v.getTilavuus(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void varastostaNegatiivinenOttamninen() {
+        varasto.lisaaVarastoon(8);
+        varasto.otaVarastosta(-5);
+        assertEquals(7, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    /*@Test
+    public void konstruktoriLuoToimivanVaraston() {
+        Varasto v = new Varasto(5);
+        assertEquals(5, v.getTilavuus(), vertailuTarkkuus);
+    }*/
 
 }
