@@ -104,10 +104,23 @@ public class VarastoTest {
         assertEquals(8, varasto.getSaldo(), vertailuTarkkuus);
     }
 
-    /*@Test
-    public void konstruktoriLuoToimivanVaraston() {
-        Varasto v = new Varasto(5);
-        assertEquals(5, v.getTilavuus(), vertailuTarkkuus);
-    }*/
+    @Test
+    public void alkusaldoKonstruktoriLuoToimivanVaraston() {
+        Varasto v = new Varasto(5, 5);
+        assertEquals(0, v.paljonkoMahtuu(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void alkusaldoKonstruktoriNegatiivinenSaldoKielletty() {
+        Varasto v = new Varasto(5, -5);
+        assertEquals(0, v.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void alkusaldoKonstruktoriSaldoEiYlitäTilavuutta() {
+        Varasto v = new Varasto(5, 6);
+        double tilaaJaljella = v.getTilavuus()-v.getSaldo();
+        assertEquals(0, tilaaJaljella, vertailuTarkkuus);
+    }
 
 }
