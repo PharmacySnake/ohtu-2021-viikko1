@@ -123,4 +123,10 @@ public class VarastoTest {
         assertEquals(0, tilaaJaljella, vertailuTarkkuus);
     }
 
+    @Test
+    public void alkusaldoKonstruktoriNegatiivinenTilavuus() {
+        Varasto v = new Varasto(-5, 0);
+        assertEquals(0, v.getTilavuus(), vertailuTarkkuus);
+    }
+
 }
